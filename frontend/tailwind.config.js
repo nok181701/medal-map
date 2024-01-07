@@ -2,7 +2,15 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        sm: "640px", // 通常のサイズ
+        md: "768px", // タブレットサイズ
+        lg: "1024px", // ラップトップサイズ
+        xl: "1280px", // デスクトップサイズ
+        "2xl": "1536px", // 大型デスクトップサイズ
+      },
+    },
   },
   plugins: [],
 };
