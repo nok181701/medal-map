@@ -13,6 +13,9 @@ module.exports = {
       transitionProperty: {
         transform: "transform",
       },
+      backgroundColor: {
+        contentsBg: "#f9f9f9",
+      },
     },
   },
   plugins: [],
