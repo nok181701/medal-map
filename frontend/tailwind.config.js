@@ -10,6 +10,9 @@ module.exports = {
         xl: "1280px", // デスクトップサイズ
         "2xl": "1536px", // 大型デスクトップサイズ
       },
+      transitionProperty: {
+        transform: "transform",
+      },
     },
   },
   plugins: [],
