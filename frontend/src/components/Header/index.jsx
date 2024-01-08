@@ -3,7 +3,7 @@ import HumbergerMenu from "src/components/Header/ HumbergerMenu";
 
 const Header = () => {
   return (
-    <header className="bg-blue-400 p-4 relative">
+    <header className="bg-blue-400 p-4 relative z-10">
       <div className="flex justify-between items-center ">
         <h1 className="text-xl font-bold text-white ml-5">メダルマップ</h1>
         <HumbergerMenu />
