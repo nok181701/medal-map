@@ -1,4 +1,4 @@
-import MapComponent from "src/components/Main/MapComponent/MapComponent";
+import MapComponent from "src/components/Main/MapComponent";
 
 const Main = () => {
   return (
