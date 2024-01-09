@@ -1,4 +1,3 @@
-import { FaRegMap } from "react-icons/fa";
 import MapComponent from "src/components/Main/MapComponent/MapComponent";
 
 const Main = () => {
@@ -7,10 +6,7 @@ const Main = () => {
       <main>
         <div className="bg-contentsBg p-4 ">
           <section className=" mb-5">
-            <div className="flex items-center">
-              <FaRegMap />
-              <h2 className="pl-2">マップから検索</h2>
-            </div>
+            <h2>マップから検索</h2>
             <hr className="border-t-2 border-blue-400" />
             <div className="m-3">
               <MapComponent />
