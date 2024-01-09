@@ -3,6 +3,14 @@ import { CSSTransition } from "react-transition-group";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import "src/styles/Header/Header.css";
+import { FaHome, FaMailBulk, FaMedapps } from "react-icons/fa";
+import { Link } from "react-router-dom";
+
+const MENUITEMS = [
+  { text: "ホーム", link: "/", icon: () => <FaHome /> },
+  { text: "アプリについて", icon: () => <FaMedapps /> },
+  { text: "お問い合わせ", icon: () => <FaMailBulk /> },
+];
 
 const HumbergerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,13 +31,21 @@ const HumbergerMenu = () => {
       >
         <FontAwesomeIcon icon={isOpen ? faTimes : faBars} />
       </div>
-
       <CSSTransition in={isOpen} timeout={300} classNames="menu" unmountOnExit>
-        <div className="absolute top-0 left-0 bg-white p-4 h-screen xl:w-3/12">
-          <div className="cursor-pointer ">メニューアイテム1</div>
-          <div className="cursor-pointer">メニューアイテム2</div>
-          <div className="cursor-pointer">メニューアイテム3</div>
-        </div>
+        <ul className="absolute top-0 left-0 bg-contentsBg p-4 h-screen xl:w-3/12">
+          {MENUITEMS.map((item) => {
+            const IconComponent = item.icon;
+            return (
+              <Link to={item.link} key={item.text}>
+                <ul className="flex items-center ">
+                  {IconComponent && <IconComponent />}
+                  <li className="cursor-pointer p-2 ">{item.text}</li>
+                </ul>
+                <hr></hr>
+              </Link>
+            );
+          })}
+        </ul>
       </CSSTransition>
       {isOpen && (
         <div className="menu-overlay active" onClick={closeMenu}></div>
