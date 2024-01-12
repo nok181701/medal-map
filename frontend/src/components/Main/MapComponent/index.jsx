@@ -1,7 +1,7 @@
+import "src/styles/Main/MapComponent/MapComponent.css";
 import { GoogleMap, LoadScript, MarkerF } from "@react-google-maps/api";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import CircleAndMaker from "src/components/Main/MapComponent/CircleAndMaker";
-import "src/styles/Main/MapComponent/MapComponent.css";
 import dummyData from "src/dummyData.json";
 import haversineDistance from "haversine-distance";
 import LoadingOverlay from "src/utils/Loading";
@@ -23,6 +23,7 @@ const MapComponent = () => {
   const [markers, setMarkers] = useState([]);
   const defaultPosition = useMemo(() => ({ lat: 35.6812, lng: 139.7671 }), []);
   const mapRef = useRef(null);
+  const isMounted = useRef(true);
 
   const handleLoad = (map) => {
     mapRef.current = map;
@@ -51,7 +52,7 @@ const MapComponent = () => {
         return;
       }
       setCurrentPosition(newPos);
-    }, 500);
+    }, 500); //onCenterChangedにより中心座標が一度でも変わると関数が実行されてしまうため、ある程度時間を設ける
   }, [setCurrentPosition, currentPosition]);
 
   const getCurrentLocation = useCallback(async () => {
@@ -80,7 +81,7 @@ const MapComponent = () => {
       latitude: location.lat,
       longitude: location.lng,
     };
-    const radiusInMeters = 1000;
+    const radiusInMeters = 1000; //半径１キロで設定
 
     const placesInRadius = dummyData.filter((place) => {
       const placeCoordinates = { latitude: place.lat, longitude: place.lng };
@@ -91,29 +92,43 @@ const MapComponent = () => {
     return placesInRadius;
   }, []);
 
-  useEffect(() => {
-    // 初回描画時や currentPosition が変更されたときに検索を行う
-    const performSearch = async () => {
-      try {
-        setIsLoading(true);
+  const performSearch = useCallback(async () => {
+    try {
+      setIsLoading(true);
 
-        const places = await searchNearbyPlaces(
-          currentPosition || defaultPosition
-        );
-        const newMarkers = places.map((place) => ({
-          position: { lat: place.lat, lng: place.lng },
-          name: place.name,
-        }));
+      const places = await searchNearbyPlaces(
+        currentPosition || defaultPosition
+      );
+      const newMarkers = places.map((place) => ({
+        position: { lat: place.lat, lng: place.lng },
+        name: place.name,
+      }));
+
+      if (isMounted.current) {
         setMarkers(newMarkers);
-      } catch (error) {
-        console.error("Error searching nearby places:", error);
-      } finally {
+      }
+    } catch (error) {
+      console.error("Error searching nearby places:", error);
+    } finally {
+      if (isMounted.current) {
         setIsLoading(false);
       }
+    }
+  }, [currentPosition, defaultPosition, searchNearbyPlaces]);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    const fetchData = async () => {
+      await performSearch();
     };
 
-    performSearch();
-  }, [currentPosition, defaultPosition, searchNearbyPlaces]);
+    fetchData();
+    // コンポーネントがアンマウントされたらisMountedをfalseにしてperformSearch中の不要な更新を避ける
+    return () => {
+      isMounted.current = false;
+    };
+  }, [performSearch]);
 
   return (
     <LoadScript googleMapsApiKey={apiKey}>
