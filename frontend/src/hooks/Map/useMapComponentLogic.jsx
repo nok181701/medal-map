@@ -10,6 +10,7 @@ const useMapComponentLogic = () => {
   const defaultPosition = useMemo(() => ({ lat: 35.6812, lng: 139.7671 }), []);
   const mapRef = useRef(null);
   const isMounted = useRef(true);
+  const prevZoomRef = useRef(null);
 
   const handleLoad = (map) => {
     mapRef.current = map;
@@ -19,6 +20,7 @@ const useMapComponentLogic = () => {
   };
 
   const handleCenterChanged = useCallback(() => {
+    //スクロールにより中心座標が変化した時、再びピンとサークルを中心座標に移動する。
     if (!mapRef.current) return;
 
     if (handleCenterChanged.timer) {
@@ -35,11 +37,20 @@ const useMapComponentLogic = () => {
       ) {
         return;
       }
+
+      const currentZoom = mapRef.current.getZoom();
+      const prevZoom = prevZoomRef.current;
+      prevZoomRef.current = currentZoom;
+      if (currentZoom !== prevZoom) {
+        // ズームインとズームアウトの場合は処理をスキップ
+        return;
+      }
       setCurrentPosition(newPos);
-    }, 500);
+    }, 500); //中心座標が1度でも変わると関数が実行されるので時間設定を設ける
   }, [setCurrentPosition, currentPosition]);
 
   const getCurrentLocation = useCallback(async () => {
+    //現在地の取得
     try {
       setIsLoading(true);
       const position = await new Promise((resolve, reject) => {
@@ -59,6 +70,7 @@ const useMapComponentLogic = () => {
   }, [defaultPosition]);
 
   const searchNearbyPlaces = useCallback(async (location) => {
+    //2地点間(サークルの中心座標とその範囲内の店舗)の計算
     const centerCoordinates = {
       latitude: location.lat,
       longitude: location.lng,
@@ -76,7 +88,7 @@ const useMapComponentLogic = () => {
 
   const performSearch = useCallback(async () => {
     try {
-      setIsLoading(true);
+      // setIsLoading(true);今は不要かも
 
       const places = await searchNearbyPlaces(
         currentPosition || defaultPosition
@@ -93,7 +105,7 @@ const useMapComponentLogic = () => {
       console.error("Error searching nearby places:", error);
     } finally {
       if (isMounted.current) {
-        setIsLoading(false);
+        // setIsLoading(false);
       }
     }
   }, [currentPosition, defaultPosition, searchNearbyPlaces]);
@@ -108,6 +120,7 @@ const useMapComponentLogic = () => {
     fetchData();
 
     return () => {
+      //アンマウント時にはisMounted.currentをfalseにして不要な更新を避ける
       isMounted.current = false;
     };
   }, [performSearch]);
