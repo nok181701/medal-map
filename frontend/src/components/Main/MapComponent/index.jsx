@@ -1,10 +1,10 @@
 import { GoogleMap, LoadScript, MarkerF } from "@react-google-maps/api";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { HashLoader } from "react-spinners";
 import CircleAndMaker from "src/components/Main/MapComponent/CircleAndMaker";
 import "src/styles/Main/MapComponent/MapComponent.css";
 import dummyData from "src/dummyData.json";
 import haversineDistance from "haversine-distance";
+import LoadingOverlay from "src/utils/Loading";
 
 const MapComponent = () => {
   const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
@@ -118,12 +118,7 @@ const MapComponent = () => {
   return (
     <LoadScript googleMapsApiKey={apiKey}>
       <div style={containerStyle}>
-        {isLoading && (
-          <div className="loadingOverlay">
-            <HashLoader color="#60A5FA" width={8} />
-            <p className="p-2 ml-2 font-bold">Loading...</p>
-          </div>
-        )}
+        {isLoading && <LoadingOverlay />}
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={currentPosition || defaultPosition}
