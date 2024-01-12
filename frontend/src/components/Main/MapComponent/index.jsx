@@ -50,6 +50,10 @@ const MapComponent = () => {
               key={index}
               position={marker.position}
               title={marker.name}
+              icon={{
+                url: process.env.REACT_APP_PUBLIC_URL + "/medal-pin.png",
+              }}
+              className="custom-marker"
             />
           ))}
         </GoogleMap>
