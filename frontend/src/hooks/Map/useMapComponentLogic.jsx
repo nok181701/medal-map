@@ -96,6 +96,9 @@ const useMapComponentLogic = () => {
       const newMarkers = places.map((place) => ({
         position: { lat: place.lat, lng: place.lng },
         name: place.name,
+        address: place.address,
+        nearestStation: place.nearestStation,
+        businessHours: place.businessHours,
       }));
 
       if (isMounted.current) {
