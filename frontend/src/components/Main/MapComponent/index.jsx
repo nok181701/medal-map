@@ -47,7 +47,11 @@ const MapComponent = (props) => {
       >
         {isLoading && <LoadingOverlay />}
         <GoogleMap
-          options={{ mapTypeControl: false, fullscreenControl: false }}
+          options={{
+            mapTypeControl: false,
+            fullscreenControl: false,
+            gestureHandling: "greedy",
+          }}
           mapContainerStyle={{
             width: "100%",
             height: "400px",
