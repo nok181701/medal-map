@@ -1,8 +1,9 @@
 import React from "react";
+import "src/styles/Footer/Footer.css";
 
 const Footer = () => {
   return (
-    <footer className="bg-blue-400 p-8 text-white text-center">
+    <footer className="header-gradient p-8 text-white text-center">
       <div className="mb-4">
         <p className="text-sm">
           &copy; 2024 メダルマップ. All Rights Reserved.

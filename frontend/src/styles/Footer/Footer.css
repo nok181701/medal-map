@@ -1,0 +1,7 @@
+.header-gradient {
+  background: linear-gradient(
+    to right,
+    #63b8ff,
+    #003366
+  ); /* グラデーションの色を指定 */
+}
