@@ -1,7 +1,6 @@
 import MapComponent from "src/components/Main/MapComponent";
 import ShopsComponent from "src/components/Main/ShopsComponent";
 import useMapComponentLogic from "src/hooks/Map/useMapComponentLogic";
-import "src/styles/Main/Main.css";
 
 const Main = () => {
   const imgUrl = process.env.REACT_APP_PUBLIC_URL;
