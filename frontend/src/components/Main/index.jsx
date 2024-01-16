@@ -9,9 +9,13 @@ const Main = () => {
     isLoading,
     markers,
     defaultPosition,
+    searchQuery,
+    searchResult,
     handleLoad,
     handleCenterChanged,
     getCurrentLocation,
+    setSearchQuery,
+    handleSearch,
   } = useMapComponentLogic();
   return (
     <>
@@ -20,7 +24,7 @@ const Main = () => {
           <section className=" mb-5">
             <div className="flex items-center">
               <img src="/mark.png" alt="" className="w-8" />
-              <h2>マップから検索</h2>
+              <h2>メダルゲームを検索</h2>
             </div>
             <hr className="border-t-2 border-blue-400" />
             <div className="m-3">
@@ -29,9 +33,13 @@ const Main = () => {
                 isLoading={isLoading}
                 markers={markers}
                 defaultPosition={defaultPosition}
+                searchQuery={searchQuery}
+                searchResult={searchResult}
                 handleLoad={handleLoad}
                 handleCenterChanged={handleCenterChanged}
                 getCurrentLocation={getCurrentLocation}
+                setSearchQuery={setSearchQuery}
+                handleSearch={handleSearch}
               />
             </div>
           </section>

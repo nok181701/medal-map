@@ -11,6 +11,8 @@ const useMapComponentLogic = () => {
   const mapRef = useRef(null);
   const isMounted = useRef(true);
   const prevZoomRef = useRef(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResult, setSearchResult] = useState(null);
 
   const handleLoad = (map) => {
     mapRef.current = map;
@@ -113,6 +115,37 @@ const useMapComponentLogic = () => {
     }
   }, [currentPosition, defaultPosition, searchNearbyPlaces]);
 
+  const handleSearch = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${searchQuery}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
+      );
+      if (!response.ok) {
+        throw new Error("Geocoding request failed");
+      }
+
+      const data = await response.json();
+
+      if (data.results && data.results.length > 0) {
+        const resultLocation = data.results[0].geometry.location;
+        setSearchResult(resultLocation);
+
+        // 検索結果の位置に地図を移動
+        setCurrentPosition({
+          lat: resultLocation.lat,
+          lng: resultLocation.lng,
+        });
+        setSearchQuery("");
+        setIsLoading(false);
+      } else {
+        console.log("No results found");
+      }
+    } catch (error) {
+      console.error("Error during search:", error);
+    }
+  };
+
   useEffect(() => {
     isMounted.current = true;
 
@@ -136,9 +169,14 @@ const useMapComponentLogic = () => {
     defaultPosition,
     mapRef,
     isMounted,
+    searchQuery,
+    searchResult,
+    setSearchQuery,
     handleLoad,
     handleCenterChanged,
     getCurrentLocation,
+    setSearchResult,
+    handleSearch,
   };
 };
 

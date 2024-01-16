@@ -1,4 +1,3 @@
-import React from "react";
 import { GoogleMap, LoadScript, MarkerF } from "@react-google-maps/api";
 import CircleAndMaker from "src/components/Main/MapComponent/CircleAndMaker";
 import LoadingOverlay from "src/utils/Loading";
@@ -12,9 +11,29 @@ const MapComponent = (props) => {
     handleLoad,
     handleCenterChanged,
     getCurrentLocation,
+    handleSearch,
+    searchQuery,
+    setSearchQuery,
   } = props;
+
   return (
     <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+      <div className="flex space-x-2 xl:w-1/4 mb-3">
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="地名からでも検索できます"
+          className="p-1.5 border border-gray-300 rounded flex-1 text-sm" // パディングを p-1.5 に変更
+        />
+        <button
+          onClick={handleSearch}
+          className="p-2 bg-blue-500 text-white rounded cursor-pointer"
+        >
+          検索
+        </button>
+      </div>
+
       <div
         style={{
           width: "100%",
