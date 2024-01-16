@@ -14,6 +14,8 @@ const MapComponent = (props) => {
     handleSearch,
     searchQuery,
     setSearchQuery,
+    showNoResultsModal,
+    handleCloseModal,
   } = props;
 
   return (
@@ -24,7 +26,7 @@ const MapComponent = (props) => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="地名からでも検索できます"
-          className="p-1.5 border border-gray-300 rounded flex-1 text-sm" // パディングを p-1.5 に変更
+          className="p-1.5 border border-gray-300 rounded flex-1 text-base" // パディングを p-1.5 に変更
         />
         <button
           onClick={handleSearch}
@@ -81,6 +83,19 @@ const MapComponent = (props) => {
           現在地に移動する
         </button>
       </div>
+      {showNoResultsModal && (
+        <div className="fixed inset-x-0 top-0 z-50 flex items-start justify-center p-4 transition-slide">
+          <div className="bg-white p-8 rounded-lg shadow-2xl z-10">
+            <p className="text-xl mb-4">該当の地域が見つかりません</p>
+            <button
+              onClick={handleCloseModal}
+              className="bg-blue-400 text-white px-4 py-2 rounded hover:bg-blue-400 focus:outline-none focus:shadow-outline-blue"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </LoadScript>
   );
 };

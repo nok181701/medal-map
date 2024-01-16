@@ -20,6 +20,20 @@
   }
 }
 
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.transition-slide {
+  animation: slideIn 0.2s ease-in-out;
+}
 /* モバイル用のスタイル */
 @media only screen and (max-width: 600px) {
   .getCurrentLocationButton {

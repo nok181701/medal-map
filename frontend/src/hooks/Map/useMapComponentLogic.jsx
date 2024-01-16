@@ -13,6 +13,7 @@ const useMapComponentLogic = () => {
   const prevZoomRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResult, setSearchResult] = useState(null);
+  const [showNoResultsModal, setShowNoResultsModal] = useState(false);
 
   const handleLoad = (map) => {
     mapRef.current = map;
@@ -139,11 +140,16 @@ const useMapComponentLogic = () => {
         setSearchQuery("");
         setIsLoading(false);
       } else {
-        console.log("No results found");
+        setIsLoading(false);
+        setShowNoResultsModal(true);
       }
     } catch (error) {
       console.error("Error during search:", error);
     }
+  };
+
+  const handleCloseModal = () => {
+    setShowNoResultsModal(false);
   };
 
   useEffect(() => {
@@ -171,6 +177,8 @@ const useMapComponentLogic = () => {
     isMounted,
     searchQuery,
     searchResult,
+    showNoResultsModal,
+    handleCloseModal,
     setSearchQuery,
     handleLoad,
     handleCenterChanged,

@@ -11,11 +11,13 @@ const Main = () => {
     defaultPosition,
     searchQuery,
     searchResult,
+    showNoResultsModal,
     handleLoad,
     handleCenterChanged,
     getCurrentLocation,
     setSearchQuery,
     handleSearch,
+    handleCloseModal,
   } = useMapComponentLogic();
   return (
     <>
@@ -35,11 +37,13 @@ const Main = () => {
                 defaultPosition={defaultPosition}
                 searchQuery={searchQuery}
                 searchResult={searchResult}
+                showNoResultsModal={showNoResultsModal}
                 handleLoad={handleLoad}
                 handleCenterChanged={handleCenterChanged}
                 getCurrentLocation={getCurrentLocation}
                 setSearchQuery={setSearchQuery}
                 handleSearch={handleSearch}
+                handleCloseModal={handleCloseModal}
               />
             </div>
           </section>
