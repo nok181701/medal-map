@@ -3,13 +3,13 @@ import { CSSTransition } from "react-transition-group";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import "src/styles/Header/Header.css";
-import { FaHome, FaMailBulk, FaMedapps } from "react-icons/fa";
+import { FaHandPaper, FaMedapps, FaPaperPlane } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const MENUITEMS = [
-  { text: "ホーム", link: "/", icon: () => <FaHome /> },
   { text: "アプリについて", icon: () => <FaMedapps /> },
-  { text: "お問い合わせ", icon: () => <FaMailBulk /> },
+  { text: "利用規約", icon: () => <FaPaperPlane /> },
+  { text: "プライバシーポリシー", link: "/", icon: () => <FaHandPaper /> },
 ];
 
 const HumbergerMenu = () => {
