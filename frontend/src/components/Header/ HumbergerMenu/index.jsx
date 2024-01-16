@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CSSTransition } from "react-transition-group";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -15,6 +15,21 @@ const MENUITEMS = [
 const HumbergerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+    const toggleBodyScroll = (disableScroll) => {
+      const body = document.querySelector("body");
+      if (body) {
+        body.style.overflow = disableScroll ? "hidden" : "auto";
+      }
+    };
+
+    toggleBodyScroll(isOpen);
+
+    return () => {
+      toggleBodyScroll(false);
+    };
+  }, [isOpen]);
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -22,7 +37,9 @@ const HumbergerMenu = () => {
   const closeMenu = () => {
     setIsOpen(false);
   };
+
   const menuIconClass = isOpen ? "menu-icon open" : "menu-icon close";
+
   return (
     <>
       <div
