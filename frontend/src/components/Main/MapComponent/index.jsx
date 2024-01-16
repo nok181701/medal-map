@@ -39,7 +39,7 @@ const MapComponent = (props) => {
       <div
         style={{
           width: "100%",
-          height: window.innerWidth < 600 ? "330px" : "400px", //
+          height: window.innerWidth < 600 ? "300px" : "400px", //
           borderRadius: "15px",
           overflow: "hidden",
           position: "relative",
