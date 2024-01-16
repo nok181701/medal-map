@@ -2,9 +2,8 @@ import React from "react";
 import { GoogleMap, LoadScript, MarkerF } from "@react-google-maps/api";
 import CircleAndMaker from "src/components/Main/MapComponent/CircleAndMaker";
 import LoadingOverlay from "src/utils/Loading";
-import useMapComponentLogic from "src/hooks/Map/useMapComponentLogic";
 
-const MapComponent = () => {
+const MapComponent = (props) => {
   const {
     currentPosition,
     isLoading,
@@ -13,8 +12,7 @@ const MapComponent = () => {
     handleLoad,
     handleCenterChanged,
     getCurrentLocation,
-  } = useMapComponentLogic();
-
+  } = props;
   return (
     <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
       <div
