@@ -2,6 +2,9 @@ require("dotenv").config();
 const express = require("express");
 const router = express.Router();
 const mysql = require("mysql2/promise");
+const cors = require("cors");
+
+router.use(cors());
 
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
@@ -13,25 +16,41 @@ const pool = mysql.createPool({
   queueLimit: 0,
 });
 
-//1/17次やること
-//DBに店舗情報を格納することはできた。
-//次にその情報をフロント側に返したい。
-//shops_imagesテーブルにも情報を入れておきたい。
-//medal_machinesテーブルには各店舗のサイトをスクレイピングする？
-
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
-    // データベースから何かしらのクエリを実行してみる
-    const [rows, fields] = await pool.query("SELECT * FROM shops LIMIT 2");
+    const { centerCoordinates, radiusInMeters } = req.body;
+    // 2地点間(サークルの中心座標とその範囲内の店舗)の計算
+    const placesInRadius = await searchNearbyPlaces(
+      centerCoordinates,
+      radiusInMeters
+    );
 
-    // rowsには結果が入っています
-    console.log("接続成功:", rows);
-    console.log("接続成功:", fields);
-    res.send("こんにちは");
-  } catch (error) {
-    console.error("接続エラー:", error);
-    res.status(500).send("データベースへの接続エラー");
+    // プロパティを非表示にする処理を追加
+    const sanitizedPlaces = placesInRadius.map((place) => {
+      // 不要なプロパティを除外する例
+      const { distance, id, opening_hours, place_id, type, ...sanitizedPlace } =
+        place;
+      return sanitizedPlace;
+    });
+
+    res.json(sanitizedPlaces);
+  } catch (e) {
+    console.error("Error searching nearby places:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+const searchNearbyPlaces = async (centerCoordinates, radiusInMeters) => {
+  try {
+    const [rows, fields] = await pool.query(
+      "SELECT *, haversineDistance(?, ?, shops.latitude, shops.longitude) AS distance FROM shops HAVING distance <= ?",
+      [centerCoordinates.latitude, centerCoordinates.longitude, radiusInMeters]
+    );
+
+    return rows;
+  } catch (error) {
+    throw error;
+  }
+};
 
 module.exports = router;
