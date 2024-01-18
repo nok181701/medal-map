@@ -19,22 +19,15 @@ const pool = mysql.createPool({
 router.post("/", async (req, res) => {
   try {
     const { centerCoordinates, radiusInMeters } = req.body;
+
     // 2地点間(サークルの中心座標とその範囲内の店舗)の計算
     const placesInRadius = await searchNearbyPlaces(
       centerCoordinates,
       radiusInMeters
     );
 
-    // プロパティを非表示にする処理を追加
-    const sanitizedPlaces = placesInRadius.map((place) => {
-      // 不要なプロパティを除外する例
-      const { distance, id, opening_hours, place_id, type, ...sanitizedPlace } =
-        place;
-      return sanitizedPlace;
-    });
-
-    res.json(sanitizedPlaces);
-  } catch (e) {
+    res.json(placesInRadius);
+  } catch (error) {
     console.error("Error searching nearby places:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
@@ -43,7 +36,7 @@ router.post("/", async (req, res) => {
 const searchNearbyPlaces = async (centerCoordinates, radiusInMeters) => {
   try {
     const [rows, fields] = await pool.query(
-      "SELECT *, haversineDistance(?, ?, shops.latitude, shops.longitude) AS distance FROM shops HAVING distance <= ?",
+      "SELECT address, latitude, longitude, name, phone_number, haversineDistance(?, ?, shops.latitude, shops.longitude) AS distance FROM shops HAVING distance <= ?",
       [centerCoordinates.latitude, centerCoordinates.longitude, radiusInMeters]
     );
 
