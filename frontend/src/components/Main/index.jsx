@@ -12,6 +12,8 @@ const Main = () => {
     searchQuery,
     searchResult,
     showNoResultsModal,
+    selectedMarker,
+    setSelectedMarker,
     handleLoad,
     handleCenterChanged,
     getCurrentLocation,
@@ -26,7 +28,9 @@ const Main = () => {
           <section className=" mb-5">
             <div className="flex items-center">
               <img src="/mark.png" alt="" className="w-8" />
-              <h2>メダルゲームを検索</h2>
+              <h2>
+                メダルゲームを検索（ピンをクリックすると対象店舗までスクロールします）
+              </h2>
             </div>
             <hr className="border-t-2 border-blue-400" />
             <div className="m-3">
@@ -38,6 +42,7 @@ const Main = () => {
                 searchQuery={searchQuery}
                 searchResult={searchResult}
                 showNoResultsModal={showNoResultsModal}
+                setSelectedMarker={setSelectedMarker}
                 handleLoad={handleLoad}
                 handleCenterChanged={handleCenterChanged}
                 getCurrentLocation={getCurrentLocation}
@@ -66,7 +71,10 @@ const Main = () => {
             </div>
             <hr className="border-t-2 border-blue-400" />
             <div className="m-3">
-              <ShopsComponent markers={markers} />
+              <ShopsComponent
+                markers={markers}
+                selectedMarker={selectedMarker}
+              />
             </div>
           </section>
         </div>

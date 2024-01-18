@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import dummyData from "src/dummyData.json";
-import haversineDistance from "haversine-distance";
+import axios from "axios";
 
 const useMapComponentLogic = () => {
   const [currentPosition, setCurrentPosition] = useState(null);
@@ -14,6 +13,7 @@ const useMapComponentLogic = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResult, setSearchResult] = useState(null);
   const [showNoResultsModal, setShowNoResultsModal] = useState(false);
+  const [selectedMarker, setSelectedMarker] = useState(null);
 
   const handleLoad = (map) => {
     mapRef.current = map;
@@ -73,20 +73,26 @@ const useMapComponentLogic = () => {
   }, [defaultPosition]);
 
   const searchNearbyPlaces = useCallback(async (location) => {
-    //2地点間(サークルの中心座標とその範囲内の店舗)の計算
     const centerCoordinates = {
       latitude: location.lat,
       longitude: location.lng,
     };
-    const radiusInMeters = 1000;
+    const radiusInMeters = 1; //半径を1キロに設定
 
-    const placesInRadius = dummyData.filter((place) => {
-      const placeCoordinates = { latitude: place.lat, longitude: place.lng };
-      const distance = haversineDistance(centerCoordinates, placeCoordinates);
+    try {
+      const response = await axios.post(
+        process.env.REACT_APP_BACKEND_ENDPOINT_DEV + "/shops",
+        {
+          centerCoordinates,
+          radiusInMeters,
+        }
+      );
 
-      return distance <= radiusInMeters;
-    });
-    return placesInRadius;
+      return response.data;
+    } catch (error) {
+      console.error("Error searching nearby places:", error);
+      return [];
+    }
   }, []);
 
   const performSearch = useCallback(async () => {
@@ -97,11 +103,13 @@ const useMapComponentLogic = () => {
         currentPosition || defaultPosition
       );
       const newMarkers = places.map((place) => ({
-        position: { lat: place.lat, lng: place.lng },
+        position: {
+          lat: place.latitude,
+          lng: place.longitude,
+        },
         name: place.name,
         address: place.address,
-        nearestStation: place.nearestStation,
-        businessHours: place.businessHours,
+        phone_number: place.phone_number,
       }));
 
       if (isMounted.current) {
@@ -178,6 +186,7 @@ const useMapComponentLogic = () => {
     searchQuery,
     searchResult,
     showNoResultsModal,
+    selectedMarker,
     handleCloseModal,
     setSearchQuery,
     handleLoad,
@@ -185,6 +194,7 @@ const useMapComponentLogic = () => {
     getCurrentLocation,
     setSearchResult,
     handleSearch,
+    setSelectedMarker,
   };
 };
 
