@@ -28,8 +28,7 @@ const ShopsComponent = (props) => {
                 <h3 className="text-lg mt-2">{marker.name}</h3>
                 <ul className="p-2">
                   <li>住所：{marker.address}</li>
-                  <li>最寄り駅：{marker.nearestStation}</li>
-                  <li>営業時間：{marker.businessHours}</li>
+                  <li>電話：{marker.phone_number}</li>
                 </ul>
               </div>
             </div>
