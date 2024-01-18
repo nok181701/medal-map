@@ -59,7 +59,10 @@ const Main = () => {
                 alt=""
                 className="w-8"
               />
-              <h2>店舗一覧</h2>
+              <h2>
+                店舗一覧<span className="text-2xl pl-2">{markers.length}</span>
+                件
+              </h2>
             </div>
             <hr className="border-t-2 border-blue-400" />
             <div className="m-3">
