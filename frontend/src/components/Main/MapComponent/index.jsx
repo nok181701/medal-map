@@ -14,6 +14,7 @@ const MapComponent = (props) => {
     handleSearch,
     searchQuery,
     setSearchQuery,
+    setSelectedMarker,
     showNoResultsModal,
     handleCloseModal,
   } = props;
@@ -26,7 +27,13 @@ const MapComponent = (props) => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="地名からでも検索できます"
-          className="p-1.5 border border-gray-300 rounded flex-1 text-base" // パディングを p-1.5 に変更
+          className="p-1.5 border border-gray-300 rounded flex-1 text-base"
+          onKeyPress={(e) => {
+            // Enter キーが押されたときに handleSearch を呼び出す
+            if (e.key === "Enter") {
+              handleSearch();
+            }
+          }}
         />
         <button
           onClick={handleSearch}
@@ -77,6 +84,7 @@ const MapComponent = (props) => {
               icon={{
                 url: process.env.REACT_APP_PUBLIC_URL + "/medal-pin.png",
               }}
+              onClick={() => setSelectedMarker(marker)}
             />
           ))}
         </GoogleMap>
