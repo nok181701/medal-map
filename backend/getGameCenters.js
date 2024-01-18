@@ -1,4 +1,4 @@
-// getGameCenters.js
+//Places APIでゲームセンターの店舗情報を取得
 
 require("dotenv").config();
 const axios = require("axios");
