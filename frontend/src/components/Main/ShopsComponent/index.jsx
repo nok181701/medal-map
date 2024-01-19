@@ -31,7 +31,7 @@ const ShopsComponent = (props) => {
                       ? marker.image
                       : `${imgUrl}/no-pictures.png` || "/no-pictures.png"
                   }
-                  className=" object-contain h-44 object-contain m-auto"
+                  className="h-44 object-contain m-auto"
                   alt=""
                 />
               </div>
