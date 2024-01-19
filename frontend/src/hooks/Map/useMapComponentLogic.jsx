@@ -2,6 +2,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import axios from "axios";
 
 const useMapComponentLogic = () => {
+  const apiUrl =
+    process.env.REACT_APP_BACKEND_ENDPOINT_DEV ||
+    process.env.REACT_APP_BACKEND_ENDPOINT_PROD;
   const [currentPosition, setCurrentPosition] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [mapCenter, setMapCenter] = useState(null);
@@ -72,30 +75,28 @@ const useMapComponentLogic = () => {
     }
   }, [defaultPosition]);
 
-  const searchNearbyPlaces = useCallback(async (location) => {
-    const centerCoordinates = {
-      latitude: location.lat,
-      longitude: location.lng,
-    };
-    const radiusInMeters = 1; //半径を1キロに設定
+  const searchNearbyPlaces = useCallback(
+    async (location) => {
+      const centerCoordinates = {
+        latitude: location.lat,
+        longitude: location.lng,
+      };
+      const radiusInMeters = 1; //半径を1キロに設定
 
-    const endpoint =
-      process.env.NODE_ENV === "development"
-        ? process.env.REACT_APP_BACKEND_ENDPOINT_DEV
-        : process.env.REACT_APP_BACKEND_ENDPOINT_PROD;
+      try {
+        const response = await axios.post(`${apiUrl}/shops`, {
+          centerCoordinates,
+          radiusInMeters,
+        });
 
-    try {
-      const response = await axios.post(`${endpoint}/shops`, {
-        centerCoordinates,
-        radiusInMeters,
-      });
-
-      return response.data;
-    } catch (error) {
-      console.error("Error searching nearby places:", error);
-      return [];
-    }
-  }, []);
+        return response.data;
+      } catch (error) {
+        console.error("Error searching nearby places:", error);
+        return [];
+      }
+    },
+    [apiUrl]
+  );
 
   const performSearch = useCallback(async () => {
     try {

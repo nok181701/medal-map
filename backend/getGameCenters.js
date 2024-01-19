@@ -9,26 +9,11 @@ const apiKey = process.env.GOOGLE_MAPS_API_KEY;
 
 // MySQL接続プールの設定
 const pool = mysql.createPool({
-  host:
-    // process.env.NODE_ENV === "development"
-    //   ? process.env.DB_HOST || "process.env.DB_HOST"
-    process.env.AWS_DB_HOST,
-  user:
-    // process.env.NODE_ENV === "development"
-    //   ? process.env.DB_USER || "process.env.DB_USER"
-    process.env.AWS_DB_USER,
-  password:
-    // process.env.NODE_ENV === "development"
-    //   ? process.env.DB_PASSWORD || "process.env.DB_PASSWORD"
-    process.env.AWS_DB_PASSWORD,
-  database:
-    // process.env.NODE_ENV === "development"
-    //   ? process.env.DB_DATABASE || "process.env.DB_DATABASE"
-    process.env.AWS_DB_DATABASE,
-  port:
-    // process.env.NODE_ENV === "development"
-    //   ? process.env.DB_PORT || "process.env.DB_PORT"
-    process.env.AWS_DB_PORT,
+  host: process.env.AWS_DB_HOST,
+  user: process.env.AWS_DB_USER,
+  password: process.env.AWS_DB_PASSWORD,
+  database: process.env.AWS_DB_DATABASE,
+  port: process.env.AWS_DB_PORT,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
