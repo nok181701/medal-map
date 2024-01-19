@@ -6,18 +6,24 @@ const cors = require("cors");
 
 router.use(cors());
 
-// const pool = mysql.createPool(process.env.JAWSDB_URL);
+let pool;
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  port: process.env.DB_PORT,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-});
+if (process.env.NODE_ENV === "production") {
+  // 本番環境の接続設定（JawsDB）
+  pool = mysql.createPool(process.env.JAWSDB_URL);
+} else {
+  // 開発環境の接続設定
+  pool = mysql.createPool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+    port: process.env.DB_PORT,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+  });
+}
 
 router.post("/", async (req, res) => {
   try {
