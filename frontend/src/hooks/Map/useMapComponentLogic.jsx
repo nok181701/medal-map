@@ -79,14 +79,16 @@ const useMapComponentLogic = () => {
     };
     const radiusInMeters = 1; //半径を1キロに設定
 
+    const endpoint =
+      process.env.NODE_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_ENDPOINT_DEV
+        : process.env.REACT_APP_BACKEND_ENDPOINT_PROD;
+
     try {
-      const response = await axios.post(
-        process.env.REACT_APP_BACKEND_ENDPOINT_DEV + "/shops",
-        {
-          centerCoordinates,
-          radiusInMeters,
-        }
-      );
+      const response = await axios.post(`${endpoint}/shops`, {
+        centerCoordinates,
+        radiusInMeters,
+      });
 
       return response.data;
     } catch (error) {
