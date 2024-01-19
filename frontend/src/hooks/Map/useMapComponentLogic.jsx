@@ -113,6 +113,7 @@ const useMapComponentLogic = () => {
         name: place.name,
         address: place.address,
         phone_number: place.phone_number,
+        image: place.image,
       }));
 
       if (isMounted.current) {

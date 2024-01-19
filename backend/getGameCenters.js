@@ -8,16 +8,30 @@ const mysql = require("mysql2/promise");
 const apiKey = process.env.GOOGLE_MAPS_API_KEY;
 
 // MySQL接続プールの設定
-const pool = mysql.createPool({
-  host: process.env.AWS_DB_HOST,
-  user: process.env.AWS_DB_USER,
-  password: process.env.AWS_DB_PASSWORD,
-  database: process.env.AWS_DB_DATABASE,
-  port: process.env.AWS_DB_PORT,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-});
+let pool;
+
+if (process.env.NODE_ENV === "production") {
+  // 本番環境の接続設定（JawsDB）
+  pool = mysql.createPool(process.env.JAWSDB_URL);
+} else {
+  // 開発環境の接続設定
+  pool = mysql.createPool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+    port: process.env.DB_PORT,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+  });
+}
+
+const getPhotoUrl = async (photoReference) => {
+  const photoUrlApi = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoReference}&key=${apiKey}`;
+  const response = await axios.get(photoUrlApi);
+  return response.request.res.responseUrl; // 画像URLを取得
+};
 
 // Place Details リクエストを行う関数
 const getPlaceDetails = async (placeId) => {
@@ -26,7 +40,6 @@ const getPlaceDetails = async (placeId) => {
   try {
     const response = await axios.get(detailsUrl);
     const details = response.data.result;
-    console.log("取得したdetails:", details);
 
     // detailsオブジェクトから必要な情報を抽出する
     const phoneNumber = details.formatted_phone_number;
@@ -48,10 +61,8 @@ const getGameCenters = async () => {
 
     // Places APIにリクエストを送信
     const response = await axios.get(apiUrl);
-    const places = response.data.results.slice(0, 10); // 最初の10件のデータを取得
-
-    console.log("APIのレスポンス:", response.data); // レスポンス全体をログに出力
-    console.log("取得した店舗情報:", places);
+    const places = response.data.results.slice(0, 5); // 最初の5件のデータを取得
+    // console.log(places);
 
     // データベースへの挿入例
     const connection = await pool.getConnection();
@@ -62,11 +73,11 @@ const getGameCenters = async () => {
         // ここでデータベースへの挿入処理を行う
         const phoneNumber = await getPlaceDetails(place.place_id);
 
-        const insertQuery =
+        const insertShopQuery =
           "INSERT INTO shops (type, name, address, phone_number, latitude, longitude, place_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        console.log("取得した電話番号:", phoneNumber);
+        // console.log("取得した電話番号:", phoneNumber);
 
-        const values = [
+        const valuesShop = [
           "ゲームセンター",
           place.name,
           place.formatted_address,
@@ -75,7 +86,24 @@ const getGameCenters = async () => {
           parseFloat(place.geometry.location.lng),
           place.place_id,
         ];
-        await connection.query(insertQuery, values);
+        const [shopResult] = await connection.query(
+          insertShopQuery,
+          valuesShop
+        );
+
+        if (place.photos && place.photos.length > 0 && shopResult.insertId) {
+          // photosが存在し、かつ少なくとも1つ以上の写真がある場合に処理
+          const photoReference = place.photos[0].photo_reference;
+
+          // 新しいリクエストを行い、画像URLを取得
+          const photoUrl = await getPhotoUrl(photoReference);
+
+          // shops_images テーブルに画像情報を挿入
+          const insertImageQuery =
+            "INSERT INTO shops_images (image, shop_id) VALUES (?, ?)";
+          const valuesImage = [photoUrl, shopResult.insertId];
+          await connection.query(insertImageQuery, valuesImage);
+        }
       }
 
       await connection.commit();

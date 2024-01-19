@@ -27,11 +27,11 @@ const ShopsComponent = (props) => {
               <div className="mb-4 md:mb-0 md:mr-4">
                 <img
                   src={
-                    process.env.REACT_APP_PUBLIC_URL === "development"
-                      ? `${imgUrl}/no-pictures.png`
-                      : "/no-pictures.png"
+                    marker.image !== null
+                      ? marker.image
+                      : `${imgUrl}/no-pictures.png` || "/no-pictures.png"
                   }
-                  className="w-44 h-44 object-contain m-auto"
+                  className=" object-contain h-44 object-contain m-auto"
                   alt=""
                 />
               </div>

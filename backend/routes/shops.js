@@ -34,8 +34,20 @@ router.post("/", async (req, res) => {
       centerCoordinates,
       radiusInMeters
     );
+    const simplifiedPlaces = placesInRadius.map((place) => {
+      return {
+        type: place.type,
+        name: place.name,
+        address: place.address,
+        phone_number: place.phone_number,
+        latitude: place.latitude,
+        longitude: place.longitude,
+        image: place.image,
+      };
+    });
+    console.log(simplifiedPlaces);
 
-    res.json(placesInRadius);
+    res.json(simplifiedPlaces);
   } catch (error) {
     console.error("Error searching nearby places:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -44,10 +56,31 @@ router.post("/", async (req, res) => {
 
 const searchNearbyPlaces = async (centerCoordinates, radiusInMeters) => {
   try {
-    const [rows, fields] = await pool.query(
-      "SELECT address, latitude, longitude, name, phone_number, haversineDistance(?, ?, shops.latitude, shops.longitude) AS distance FROM shops HAVING distance <= ?",
-      [centerCoordinates.latitude, centerCoordinates.longitude, radiusInMeters]
-    );
+    const query = `
+      SELECT
+        shops.id,
+        shops.type,
+        shops.name,
+        shops.address,
+        shops.phone_number,
+        shops.opening_hours,
+        shops.latitude,
+        shops.longitude,
+        shops.place_id,
+        shops_images.image,
+        haversineDistance(?, ?, shops.latitude, shops.longitude) AS distance
+      FROM
+        shops
+      LEFT JOIN
+        shops_images ON shops.id = shops_images.shop_id
+      HAVING
+        distance <= ?
+    `;
+    const [rows, fields] = await pool.query(query, [
+      centerCoordinates.latitude,
+      centerCoordinates.longitude,
+      radiusInMeters,
+    ]);
 
     return rows;
   } catch (error) {
