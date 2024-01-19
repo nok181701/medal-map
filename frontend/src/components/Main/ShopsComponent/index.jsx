@@ -27,9 +27,8 @@ const ShopsComponent = (props) => {
               <div className="mb-4 md:mb-0 md:mr-4">
                 <img
                   src={
-                    marker.image !== null
-                      ? `${marker.image}`
-                      : `${imgUrl}/no-pictures.png` || "/no-pictures.png"
+                    marker.image
+                    // : `${imgUrl}/no-pictures.png` || "/no-pictures.png"
                   }
                   className="h-44 object-contain m-auto"
                   alt=""
