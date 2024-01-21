@@ -45,7 +45,6 @@ router.post("/", async (req, res) => {
         image: place.image,
       };
     });
-    console.log(simplifiedPlaces);
 
     res.json(simplifiedPlaces);
   } catch (error) {
