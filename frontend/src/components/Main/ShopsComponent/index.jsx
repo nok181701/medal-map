@@ -25,10 +25,12 @@ const ShopsComponent = (props) => {
               }`}
             >
               <div className="mb-4 md:mb-0 md:mr-4">
+                {/* //1/18なぜか本番環境だと画像が表示されない */}
+                {/* とか思ってだけど本番環境のDBのshops_imagesに入っていなかった */}
                 <img
                   src={
                     marker.image !== null
-                      ? `${imgUrl}/${marker.image}`
+                      ? marker.image
                       : `${imgUrl}/no-pictures.png` || "/no-pictures.png"
                   }
                   className="h-44 object-contain m-auto"
