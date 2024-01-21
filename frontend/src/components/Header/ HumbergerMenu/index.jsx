@@ -10,7 +10,11 @@ const MENUITEMS = [
   { text: "トップへ", link: "/", icon: () => <FaHome /> },
   { text: "アプリについて", icon: () => <FaMedapps /> },
   { text: "利用規約", link: "/terms", icon: () => <FaPaperPlane /> },
-  { text: "プライバシーポリシー", link: "/", icon: () => <FaHandPaper /> },
+  {
+    text: "プライバシーポリシー",
+    link: "/privacy",
+    icon: () => <FaHandPaper />,
+  },
 ];
 
 const HumbergerMenu = () => {

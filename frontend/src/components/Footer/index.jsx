@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "src/styles/Footer/Footer.css";
 
 const Footer = () => {
@@ -10,8 +11,12 @@ const Footer = () => {
         </p>
       </div>
       <div>
-        <p className="text-xs inline mr-4">利用規約</p>
-        <p className="text-xs inline">プライバシーポリシー</p>
+        <Link to="/terms" className="text-xs inline mr-4">
+          利用規約
+        </Link>
+        <Link to="/privacy" className="text-xs inline">
+          プライバシーポリシー
+        </Link>
       </div>
     </footer>
   );
