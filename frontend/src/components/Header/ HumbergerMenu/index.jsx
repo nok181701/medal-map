@@ -3,12 +3,13 @@ import { CSSTransition } from "react-transition-group";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import "src/styles/Header/Header.css";
-import { FaHandPaper, FaMedapps, FaPaperPlane } from "react-icons/fa";
+import { FaHandPaper, FaHome, FaMedapps, FaPaperPlane } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const MENUITEMS = [
+  { text: "トップへ", link: "/", icon: () => <FaHome /> },
   { text: "アプリについて", icon: () => <FaMedapps /> },
-  { text: "利用規約", icon: () => <FaPaperPlane /> },
+  { text: "利用規約", link: "/terms", icon: () => <FaPaperPlane /> },
   { text: "プライバシーポリシー", link: "/", icon: () => <FaHandPaper /> },
 ];
 
