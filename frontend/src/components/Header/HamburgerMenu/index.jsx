@@ -17,7 +17,7 @@ const MENUITEMS = [
   },
 ];
 
-const HumbergerMenu = () => {
+const HamburgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -76,4 +76,4 @@ const HumbergerMenu = () => {
   );
 };
 
-export default HumbergerMenu;
+export default HamburgerMenu;
