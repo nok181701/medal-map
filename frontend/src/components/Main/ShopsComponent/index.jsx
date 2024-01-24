@@ -24,16 +24,14 @@ const ShopsComponent = (props) => {
                 marker === selectedMarker ? "border-2 border-blue-500" : ""
               }`}
             >
-              <div className="mb-4 md:mb-0 md:mr-4">
-                {/* //1/18なぜか本番環境だと画像が表示されない */}
-                {/* とか思ってだけど本番環境のDBのshops_imagesに入っていなかった */}
+              <div className="mb-4 md:mb-0 md:mr-4 flex">
                 <img
                   src={
                     marker.image !== null
                       ? marker.image
                       : `${imgUrl}/no-pictures.png` || "/no-pictures.png"
                   }
-                  className="h-44 object-contain m-auto"
+                  className="w-44 object-contain m-auto rounded"
                   alt=""
                 />
               </div>
