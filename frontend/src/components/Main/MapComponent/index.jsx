@@ -1,4 +1,5 @@
-import { GoogleMap, LoadScript, MarkerF } from "@react-google-maps/api";
+import React from "react";
+import { GoogleMap, MarkerF } from "@react-google-maps/api";
 import CircleAndMaker from "src/components/Main/MapComponent/CircleAndMaker";
 import LoadingOverlay from "src/utils/Loading";
 
@@ -20,7 +21,7 @@ const MapComponent = (props) => {
   } = props;
 
   return (
-    <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+    <div>
       <div className="flex space-x-2 xl:w-1/4 mb-3">
         <input
           type="text"
@@ -46,7 +47,7 @@ const MapComponent = (props) => {
       <div
         style={{
           width: "100%",
-          height: window.innerWidth < 600 ? "300px" : "400px", //
+          height: window.innerWidth < 600 ? "300px" : "400px",
           borderRadius: "15px",
           overflow: "hidden",
           position: "relative",
@@ -108,7 +109,7 @@ const MapComponent = (props) => {
           </div>
         </div>
       )}
-    </LoadScript>
+    </div>
   );
 };
 
