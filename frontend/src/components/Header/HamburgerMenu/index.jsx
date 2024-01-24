@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 const MENUITEMS = [
   { text: "トップへ", link: "/", icon: () => <FaHome /> },
-  { text: "アプリについて", icon: () => <FaMedapps /> },
+  { text: "アプリについて", link: "/about", icon: () => <FaMedapps /> },
   { text: "利用規約", link: "/terms", icon: () => <FaPaperPlane /> },
   {
     text: "プライバシーポリシー",

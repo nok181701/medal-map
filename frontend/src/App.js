@@ -4,6 +4,7 @@ import Home from "src/pages/Home";
 import PrivacyPolicy from "src/pages/PrivacyPolicy";
 import TermsOfService from "src/pages/TermsOfService";
 import "src/styles/tailwind.css";
+import About from "src/pages/About";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/about" element={<About />} />
           </Routes>
         </Router>
       </LoadScript>
