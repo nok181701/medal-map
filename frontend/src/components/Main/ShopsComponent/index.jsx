@@ -31,7 +31,7 @@ const ShopsComponent = (props) => {
                       ? marker.image
                       : `${imgUrl}/no-pictures.png` || "/no-pictures.png"
                   }
-                  className="w-44 object-contain m-auto rounded"
+                  className="w-48 h-48 object-cover m-auto rounded"
                   alt=""
                 />
               </div>
@@ -39,8 +39,10 @@ const ShopsComponent = (props) => {
               <div>
                 <h3 className="text-lg mt-2">{marker.name}</h3>
                 <ul className="p-2">
-                  <li>住所：{marker.address}</li>
-                  <li>電話：{marker.phone_number}</li>
+                  <li>住所：{marker.address ? marker.address : "なし"}</li>
+                  <li>
+                    電話：{marker.phone_number ? marker.phone_number : "なし"}
+                  </li>
                 </ul>
               </div>
             </div>
