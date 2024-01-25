@@ -11,7 +11,10 @@ let pool;
 
 if (process.env.NODE_ENV === "production") {
   // 本番環境の接続設定（JawsDB）
-  pool = mysql.createPool(process.env.JAWSDB_URL);
+  pool = mysql.createPool({
+    connectionString: process.env.JAWSDB_URL,
+    idleTimeoutMillis: 30000,
+  });
 } else {
   // 開発環境の接続設定
   pool = mysql.createPool({
