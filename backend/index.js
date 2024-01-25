@@ -1,4 +1,5 @@
 const express = require("express");
+const helmet = require("helmet");
 const cors = require("cors");
 const path = require("path"); // path モジュールをインポート
 const shopsRouter = require(path.join(__dirname, "routes", "shops")); // ファイルパスを安全に結合
@@ -6,7 +7,7 @@ const shopsRouter = require(path.join(__dirname, "routes", "shops")); // ファ�
 const app = express();
 
 const PORT = process.env.PORT || 5000;
-
+app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use("/api/shops", shopsRouter); // /places エンドポイントに placesRouter を使用

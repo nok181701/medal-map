@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const mysql = require("mysql2/promise");
 const cors = require("cors");
+const { validationResult, check } = require("express-validator");
 
 router.use(cors());
 
@@ -25,33 +26,47 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-router.post("/", async (req, res) => {
-  try {
-    const { centerCoordinates, radiusInMeters } = req.body;
+router.post(
+  "/",
+  [
+    check("centerCoordinates.latitude").isNumeric(),
+    check("centerCoordinates.longitude").isNumeric(),
+    check("radiusInMeters").isNumeric(),
+  ],
+  async (req, res) => {
+    // バリデーションエラーのチェック
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-    // 2地点間(サークルの中心座標とその範囲内の店舗)の計算
-    const placesInRadius = await searchNearbyPlaces(
-      centerCoordinates,
-      radiusInMeters
-    );
-    const simplifiedPlaces = placesInRadius.map((place) => {
-      return {
-        type: place.type,
-        name: place.name,
-        address: place.address,
-        phone_number: place.phone_number,
-        latitude: place.latitude,
-        longitude: place.longitude,
-        image: place.image,
-      };
-    });
+    try {
+      const { centerCoordinates, radiusInMeters } = req.body;
 
-    res.json(simplifiedPlaces);
-  } catch (error) {
-    console.error("Error searching nearby places:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+      // 2地点間(サークルの中心座標とその範囲内の店舗)の計算
+      const placesInRadius = await searchNearbyPlaces(
+        centerCoordinates,
+        radiusInMeters
+      );
+      const simplifiedPlaces = placesInRadius.map((place) => {
+        return {
+          type: place.type,
+          name: place.name,
+          address: place.address,
+          phone_number: place.phone_number,
+          latitude: place.latitude,
+          longitude: place.longitude,
+          image: place.image,
+        };
+      });
+
+      res.json(simplifiedPlaces);
+    } catch (error) {
+      console.error("Error searching nearby places:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
   }
-});
+);
 
 const searchNearbyPlaces = async (centerCoordinates, radiusInMeters) => {
   try {
