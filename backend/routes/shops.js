@@ -11,10 +11,12 @@ let pool;
 
 if (process.env.NODE_ENV === "production") {
   // 本番環境の接続設定（JawsDB）
-  pool = mysql.createPool({
-    connectionString: process.env.JAWSDB_URL,
-    idleTimeoutMillis: 30000,
-  });
+  (pool = mysql.createPool(process.env.JAWSDB_URL)),
+    {
+      connectionLimit: 10,
+      waitForConnections: true,
+      stringifyObjects: true,
+    };
 } else {
   // 開発環境の接続設定
   pool = mysql.createPool({
@@ -93,7 +95,7 @@ const searchNearbyPlaces = async (centerCoordinates, radiusInMeters) => {
       HAVING
         distance <= ?
     `;
-    const [rows, fields] = await pool.query(query, [
+    const [rows, fields] = await pool.execute(query, [
       centerCoordinates.latitude,
       centerCoordinates.longitude,
       radiusInMeters,
