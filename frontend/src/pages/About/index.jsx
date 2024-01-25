@@ -21,9 +21,7 @@ const About = () => {
       <div className="bg-contentsBg p-8">
         <article>
           <div className="w-5/6 md:w-2/3 m-auto border-y-2 border-blue-400 p-10">
-            <h1 className="text-3xl font-bold  text-center">
-              メダルマップとは
-            </h1>
+            <h1 className="text-3xl font-bold  text-center">メダルマップ</h1>
             <p className="text-center mt-5">
               ゲームセンターが大好きな人のための検索サービスです
             </p>
