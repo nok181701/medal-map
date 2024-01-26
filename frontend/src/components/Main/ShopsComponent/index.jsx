@@ -43,6 +43,28 @@ const ShopsComponent = (props) => {
                   <li>
                     電話：{marker.phone_number ? marker.phone_number : "なし"}
                   </li>
+                  <li>
+                    メダルゲーム：
+                    <ul>
+                      {marker.medal_machine_name.map((machineName, index) =>
+                        machineName !== null ? (
+                          <li
+                            key={index}
+                            className="inline-block mx-2 my-1 px-4 py-2 bg-green-400 text-white font-bold rounded-md hover:bg-green-600"
+                          >
+                            {machineName}
+                          </li>
+                        ) : (
+                          <li
+                            key={index}
+                            className="inline-block px-2 py-2 bg-red-300 text-white font-bold rounded-md"
+                          >
+                            メダルゲーム：設置していないかまだ情報が更新されていません
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </li>
                 </ul>
               </div>
             </div>

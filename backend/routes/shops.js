@@ -64,19 +64,31 @@ router.post(
       //   "処理にかかった時間: " + (end[0] * 1e9 + end[1]) / 1e6 + "ミリ秒"
       // );
 
-      const simplifiedPlaces = placesInRadius.map((place) => {
-        return {
-          type: place.type,
-          name: place.name,
-          address: place.address,
-          phone_number: place.phone_number,
-          latitude: place.latitude,
-          longitude: place.longitude,
-          image: place.image,
-          medal_machine_name: place.medal_machine_name,
-        };
+      const simplifiedPlaces = [];
+      const placeMap = new Map();
+
+      placesInRadius.forEach((place) => {
+        const key = place.id;
+
+        if (!placeMap.has(key)) {
+          placeMap.set(key, {
+            type: place.type,
+            name: place.name,
+            address: place.address,
+            phone_number: place.phone_number,
+            latitude: place.latitude,
+            longitude: place.longitude,
+            image: place.image,
+            medal_machine_name: [],
+          });
+        }
+
+        // グループ化された店舗にメダルマシン情報を追加
+        placeMap.get(key).medal_machine_name.push(place.medal_machine_name);
       });
-      console.log(simplifiedPlaces);
+
+      // Mapを配列に変換
+      simplifiedPlaces.push(...placeMap.values());
       res.json(simplifiedPlaces);
     } catch (error) {
       console.error("Error searching nearby places:", error);
@@ -122,7 +134,6 @@ const searchNearbyPlaces = async (centerCoordinates, radiusInMeters) => {
       centerCoordinates.longitude,
       radiusInMeters,
     ]);
-    // console.log(rows);
     return rows;
   } catch (error) {
     throw error;

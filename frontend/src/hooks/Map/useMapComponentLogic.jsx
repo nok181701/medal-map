@@ -114,6 +114,7 @@ const useMapComponentLogic = () => {
         address: place.address,
         phone_number: place.phone_number,
         image: place.image,
+        medal_machine_name: place.medal_machine_name,
       }));
 
       if (isMounted.current) {
