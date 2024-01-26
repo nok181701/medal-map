@@ -48,10 +48,21 @@ router.post(
     try {
       const { centerCoordinates, radiusInMeters } = req.body;
 
+      // const start = process.hrtime();
+
       const placesInRadius = await searchNearbyPlaces(
         centerCoordinates,
         radiusInMeters
       );
+
+      // 何らかの処理を行う（例: ループや関数の実行）
+
+      // const end = process.hrtime(start);
+
+      // 処理にかかった時間を表示
+      // console.log(
+      //   "処理にかかった時間: " + (end[0] * 1e9 + end[1]) / 1e6 + "ミリ秒"
+      // );
 
       const simplifiedPlaces = placesInRadius.map((place) => {
         return {
@@ -62,9 +73,10 @@ router.post(
           latitude: place.latitude,
           longitude: place.longitude,
           image: place.image,
+          medal_machine_name: place.medal_machine_name,
         };
       });
-
+      console.log(simplifiedPlaces);
       res.json(simplifiedPlaces);
     } catch (error) {
       console.error("Error searching nearby places:", error);
@@ -75,26 +87,33 @@ router.post(
 
 const searchNearbyPlaces = async (centerCoordinates, radiusInMeters) => {
   try {
+    // haversineDistanceを一度計算して変数に保存
+    const haversineCondition =
+      "haversineDistance(?, ?, shops.latitude, shops.longitude)";
+
     const query = `
-    SELECT
-      shops.id,
-      shops.type,
-      shops.name,
-      shops.address,
-      shops.phone_number,
-      shops.opening_hours,
-      shops.latitude,
-      shops.longitude,
-      shops.place_id,
-      shops_images.image,
-      haversineDistance(?, ?, shops.latitude, shops.longitude) AS distance
-    FROM
-      shops
-    LEFT JOIN
-      shops_images ON shops.id = shops_images.shop_id
-    WHERE
-      haversineDistance(?, ?, shops.latitude, shops.longitude) <= ?
-  `;
+      SELECT
+        shops.id,
+        shops.type,
+        shops.name,
+        shops.address,
+        shops.phone_number,
+        shops.opening_hours,
+        shops.latitude,
+        shops.longitude,
+        shops.place_id,
+        shops_images.image,
+        medal_machines.name AS medal_machine_name,
+        ${haversineCondition} AS distance
+      FROM
+        shops
+      LEFT JOIN
+        shops_images ON shops.id = shops_images.shop_id
+      LEFT JOIN
+        medal_machines ON shops.id = medal_machines.shop_id
+      WHERE
+        ${haversineCondition} <= ?;
+    `;
 
     const [rows, fields] = await pool.execute(query, [
       centerCoordinates.latitude,
@@ -103,7 +122,7 @@ const searchNearbyPlaces = async (centerCoordinates, radiusInMeters) => {
       centerCoordinates.longitude,
       radiusInMeters,
     ]);
-
+    // console.log(rows);
     return rows;
   } catch (error) {
     throw error;
