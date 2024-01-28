@@ -50,14 +50,14 @@ const ShopsComponent = (props) => {
                         machineName !== null ? (
                           <li
                             key={index}
-                            className="inline-block mx-2 my-1 px-4 py-2 bg-green-400 text-white font-bold rounded-md hover:bg-green-600"
+                            className="inline-block mx-2 my-1 px-2 py-2 bg-green-400 text-white font-bold text-sm rounded-md "
                           >
                             {machineName}
                           </li>
                         ) : (
                           <li
                             key={index}
-                            className="inline-block px-2 py-2 bg-red-300 text-white font-bold rounded-md"
+                            className="inline-block px-2 py-2 bg-gray-300 text-white font-bold  rounded-md"
                           >
                             メダルゲーム：設置していないかまだ情報が更新されていません
                           </li>
