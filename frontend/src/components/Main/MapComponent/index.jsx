@@ -33,6 +33,7 @@ const MapComponent = (props) => {
             // Enter キーが押されたときに handleSearch を呼び出す
             if (e.key === "Enter") {
               handleSearch();
+              e.target.blur();
             }
           }}
         />
