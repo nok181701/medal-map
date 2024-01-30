@@ -110,7 +110,6 @@ const searchNearbyPlaces = async (centerCoordinates, radiusInMeters) => {
         shops.name,
         shops.address,
         shops.phone_number,
-        shops.opening_hours,
         shops.latitude,
         shops.longitude,
         shops.place_id,
