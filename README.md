@@ -17,7 +17,9 @@
 </div>
 
 ## ER図
-![gx3ncpe6gnv2ogl3](https://github.com/nok181701/medal-map/assets/127045784/503433a1-6980-4d1b-b83e-b544227edfbd)
+
+<img src="https://github.com/nok181701/medal-map/assets/127045784/503433a1-6980-4d1b-b83e-b544227edfbd" alt="gx3ncpe6gnv2ogl3" align="center" width="70%" />
+
 
 
 ## 技術スタック
