@@ -28,7 +28,7 @@ const Main = () => {
           <section className=" mb-5">
             <div className="flex items-center">
               <img src="/mark.png" alt="" className="w-8" />
-              <h2>メダルゲームを検索</h2>
+              <h2>メダルゲームを検索（関東圏のみ）</h2>
             </div>
             <hr className="border-t-2 border-blue-400" />
             <div className="m-3">
