@@ -1,0 +1,48 @@
+/* DarkModeButton.module.css */
+
+.darkModeButton {
+  background-color: #4a5568; /* 通常のモードの背景色 */
+  color: #ffffff; /* 通常のモードのテキスト色 */
+  padding: 7px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  outline: none; /* クリック時の枠線を非表示 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 70px;
+  height: 30px;
+  transition: background-color 0.3s ease; /* 背景色の変化にトランジションを追加 */
+
+  /* ダークモード時のスタイル */
+  &.dark {
+    background-color: #1a202c; /* ダークモードの背景色 */
+    color: #ffffff; /* ダークモードのテキスト色 */
+  }
+}
+
+/* トグルスイッチのスタイル */
+.darkModeButton::before {
+  content: "";
+  width: 25px;
+  height: 25px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  transition: transform 0.3s ease;
+  transform: translateX(0);
+}
+
+/* ダークモード時のトグルスイッチのスタイル */
+.darkModeButton.dark::before {
+  transform: translateX(30px);
+}
+
+@media (max-width: 767px) {
+  .darkModeButton {
+    display: none; /* スマートフォンの場合は非表示にする */
+  }
+  .darkModeIcon {
+    display: none;
+  }
+}

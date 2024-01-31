@@ -14,17 +14,17 @@ const ShopsComponent = (props) => {
 
   return (
     <>
-      <div className="flex flex-col grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="flex flex-col grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
         {markers.length !== 0 ? (
           markers.map((marker, index) => (
             <div
               key={index}
               ref={marker === selectedMarker ? selectedMarkerRef : null} // 選択されたマーカーに対応する場合、Refを設定
-              className={`flex flex-col md:flex-row bg-white p-4 rounded-lg shadow-md ${
+              className={`flex flex-col md:flex-row bg-white p-4 rounded-lg shadow-md  dark:bg-gray-800 transition-colors duration-300 ease-in-out ${
                 marker === selectedMarker ? "border-2 border-blue-500" : ""
               }`}
             >
-              <div className="mb-4 md:mb-0 md:mr-4 flex">
+              <div className="mb-4 md:mb-0 md:mr-4 flex ">
                 <img
                   src={
                     marker.image !== null
@@ -37,20 +37,22 @@ const ShopsComponent = (props) => {
               </div>
               <hr />
               <div>
-                <h3 className="text-lg mt-2">{marker.name}</h3>
+                <h3 className="text-lg mt-2 dark:text-white">{marker.name}</h3>
                 <ul className="p-2">
-                  <li>住所：{marker.address ? marker.address : "なし"}</li>
-                  <li>
+                  <li className="dark:text-white">
+                    住所：{marker.address ? marker.address : "なし"}
+                  </li>
+                  <li className="dark:text-white">
                     電話：{marker.phone_number ? marker.phone_number : "なし"}
                   </li>
-                  <li>
+                  <li className="dark:text-white">
                     メダルゲーム：
                     <ul>
                       {marker.medal_machine_name.map((machineName, index) =>
                         machineName !== null ? (
                           <li
                             key={index}
-                            className="inline-block mx-2 my-1 px-2 py-2 bg-green-400 text-white font-bold text-sm rounded-md "
+                            className="inline-block mx-2 my-1 px-2 py-2 bg-green-400 dark:bg-gray-600 text-white font-bold text-sm rounded-md "
                           >
                             {machineName}
                           </li>
@@ -70,7 +72,7 @@ const ShopsComponent = (props) => {
             </div>
           ))
         ) : (
-          <div className="flex flex-col md:flex-row bg-white p-4 rounded-lg shadow-md">
+          <div className="flex flex-col md:flex-row bg-white p-4 rounded-lg shadow-md dark:bg-gray-800 transition-colors duration-300 ease-in-out">
             <div className="mb-4 md:mb-0 md:mr-4">
               <img
                 src={
@@ -84,7 +86,9 @@ const ShopsComponent = (props) => {
             </div>
             <hr />
             <div>
-              <h3 className="text-lg mt-2">お店が見つかりません</h3>
+              <h3 className="text-lg mt-2 dark:text-white">
+                お店が見つかりません
+              </h3>
             </div>
           </div>
         )}

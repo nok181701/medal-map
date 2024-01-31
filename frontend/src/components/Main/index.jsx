@@ -24,11 +24,13 @@ const Main = () => {
   return (
     <>
       <main>
-        <div className="bg-contentsBg p-4 ">
+        <div className="bg-contentsBg p-4 dark:bg-gray-700 transition-colors duration-300 ease-in-out">
           <section className=" mb-5">
             <div className="flex items-center">
               <img src="/mark.png" alt="" className="w-8" />
-              <h2>メダルゲームを検索（関東圏のみ）</h2>
+              <h2 className="dark:text-white">
+                メダルゲームを検索（関東圏のみ）
+              </h2>
             </div>
             <hr className="border-t-2 border-blue-400" />
             <div className="m-3">
@@ -62,8 +64,11 @@ const Main = () => {
                 alt=""
                 className="w-8"
               />
-              <h2>
-                店舗一覧<span className="text-2xl pl-2">{markers.length}</span>
+              <h2 className="dark:text-white">
+                店舗一覧
+                <span className="text-2xl pl-2 dark:text-white">
+                  {markers.length}
+                </span>
                 件
               </h2>
             </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import DarkModeButton from "src/components/Header/DarkModeButton";
 import HamburgerMenu from "src/components/Header/HamburgerMenu";
 import "src/styles/Header/Header.css";
 
@@ -28,7 +29,10 @@ const Header = () => {
             <h1 className="text-xl font-bold text-white">メダルマップ</h1>
           </Link>
         </div>
-        <HamburgerMenu />
+        <div className="flex items-center">
+          <DarkModeButton />
+          <HamburgerMenu />
+        </div>
       </div>
     </header>
   );
