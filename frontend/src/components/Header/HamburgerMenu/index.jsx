@@ -5,6 +5,7 @@ import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import "src/styles/Header/Header.css";
 import { FaHandPaper, FaHome, FaMedapps, FaPaperPlane } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import DarkModeButton from "src/components/Header/DarkModeButton";
 
 const MENUITEMS = [
   { text: "トップへ", link: "/", icon: () => <FaHome /> },
@@ -67,6 +68,7 @@ const HamburgerMenu = () => {
               </Link>
             );
           })}
+          <DarkModeButton HamburgerMenu />
         </ul>
       </CSSTransition>
       {isOpen && (
