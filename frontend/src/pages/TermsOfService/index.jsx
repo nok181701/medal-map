@@ -6,9 +6,11 @@ const TermsOfService = () => {
   return (
     <>
       <Header />
-      <div className="bg-contentsBg p-8">
-        <h1 className="text-3xl font-bold mb-4">利用規約</h1>
-        <hr className=" mb-3" />
+      <div className="bg-contentsBg p-8 dark:bg-gray-600 transition-colors duration-300 ease-in-out">
+        <h1 className="text-3xl font-bold  pb-2 mb-8 border-b border-black">
+          利用規約
+        </h1>
+
         <article className="text-lg">
           <p className="text-sm mb-3">
             この利用規約（以下、「本規約」といいます。）は、メダルマップが（以下、「当方」といいます。）がこのウェブサイト上で提供するサービス（以下、「本サービス」といいます。）の利用条件を定めるものです。ユーザーの皆さま（以下、「ユーザー」といいます。）には、本規約に従って、本サービスをご利用いただきます。
