@@ -22,7 +22,7 @@ const MapComponent = (props) => {
 
   return (
     <div>
-      <div className="flex space-x-2 xl:w-1/4 mb-3">
+      <div className="flex space-x-2 xl:w-1/4 mb-3 w-72 h-10">
         <input
           type="text"
           value={searchQuery}
