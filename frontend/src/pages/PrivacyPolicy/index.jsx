@@ -6,7 +6,7 @@ const PrivacyPolicy = () => {
     <>
       <Header />
       <div className="bg-contentsBg p-8 dark:bg-gray-600 transition-colors duration-300 ease-in-out">
-        <h1 class="text-3xl font-bold pb-2 mb-8 border-b border-black">
+        <h1 class="text-2xl font-bold pb-2 mb-8 border-b border-black">
           プライバシーポリシー
         </h1>
 
