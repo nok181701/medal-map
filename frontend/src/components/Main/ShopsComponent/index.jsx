@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import ScrollToTopButton from "src/components/Main/ShopsComponent/ScrollToTopButton";
 
 const ShopsComponent = (props) => {
   const imgUrl = process.env.REACT_APP_PUBLIC_URL;
@@ -92,6 +93,7 @@ const ShopsComponent = (props) => {
             </div>
           </div>
         )}
+        {markers && <ScrollToTopButton />}
       </div>
     </>
   );

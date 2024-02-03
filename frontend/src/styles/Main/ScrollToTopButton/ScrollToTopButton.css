@@ -1,0 +1,20 @@
+.scroll-to-top-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #3498db;
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  padding: 25px; /* パディングを大きく */
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; /* transform を追加 */
+  transform: scale(0); /* 最初は非表示 */
+}
+
+.scroll-to-top-button.visible {
+  opacity: 1;
+  transform: scale(1); /* 表示時に拡大 */
+  transition-delay: 0.2s; /* 0.2秒遅らせてフェードイン */
+}
