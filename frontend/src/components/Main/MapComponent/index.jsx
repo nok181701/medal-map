@@ -28,7 +28,7 @@ const MapComponent = (props) => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="地名からでも検索できます"
-          className="p-1.5 border border-gray-300 rounded flex-1 text-base"
+          className="p-1.5 border border-gray-300 rounded w-56 text-base"
           onKeyPress={(e) => {
             // Enter キーが押されたときに handleSearch を呼び出す
             if (e.key === "Enter") {
