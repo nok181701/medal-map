@@ -21,7 +21,7 @@ const About = () => {
       <div className="bg-contentsBg p-8 dark:bg-gray-700 transition-colors duration-300 ease-in-out">
         <article>
           <div className="w-5/6 md:w-2/3 m-auto border-y-2 border-blue-400 p-10">
-            <h1 className="text-3xl font-bold  text-center dark:text-white">
+            <h1 className="text-2xl font-bold  text-center dark:text-white">
               メダルマップ
             </h1>
             <p className="text-center mt-5 dark:text-white">
