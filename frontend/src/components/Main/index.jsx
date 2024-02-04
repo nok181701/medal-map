@@ -29,7 +29,7 @@ const Main = () => {
             <div className="flex items-center">
               <img src="/mark.png" alt="" className="w-8" />
               <h2 className="dark:text-white">
-                メダルゲームを検索（関東圏のみ）
+                ゲームセンターを検索（関東圏のみ）
               </h2>
             </div>
             <hr className="border-t-2 border-blue-400" />
