@@ -1,7 +1,8 @@
 # メダルマップ
 
 <div align="center">
-  <img src="https://github.com/nok181701/medal-map/assets/127045784/85c8a008-330f-4abc-beb0-a7aa25285307" alt="Untitled">
+  ![Blue Neon Futuristic Game Streaming Twitch Banner 2](https://github.com/nok181701/medal-map/assets/127045784/507e961c-b526-46ea-b07f-56fbcebf8504)
+
 </div>
 
 ## サービス概要
