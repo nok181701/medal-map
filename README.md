@@ -1,9 +1,9 @@
 # メダルマップ
 
 <div align="center">
-  ![Blue Neon Futuristic Game Streaming Twitch Banner 2](https://github.com/nok181701/medal-map/assets/127045784/507e961c-b526-46ea-b07f-56fbcebf8504)
-
+  <img src="https://github.com/nok181701/medal-map/assets/127045784/344f6527-0fae-4579-aef7-a74e66495748" alt="banner">
 </div>
+
 
 ## サービス概要
 「メダルマップ」は、ゲームセンターが好きな人（特にメダルゲームが好き）向けのオンライン検索サービスです。このサービスでは、地図上にゲームセンターの位置情報を表示し、ユーザーが楽しむための最適な場所を見つけることができます。
