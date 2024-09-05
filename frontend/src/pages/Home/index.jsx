@@ -6,7 +6,6 @@ import MaintenancePage from "src/components/Maintenance";
 
 const Home = () => {
   const [isMaintenance, setIsMaintenance] = useState(false);
-
   useEffect(() => {
     // バックエンドの状態をチェックするAPIリクエスト
     const checkBackendStatus = async () => {
